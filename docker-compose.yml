@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  sparkmaster:
+    image: electronifie/spark
+    command: master
+    hostname: sparkmaster
+    ports:
+      - "6066:6066"
+      - "7070:7070"
+      - "8080:8080"
+      - "50070:50070"
+  sparkworker:
+    image: electronifie/spark
+    command: worker sparkmaster
+    environment:
+      SPARK_WORKER_CORES: 1
+      SPARK_WORKER_MEMORY: 2g
+    links:
+      - sparkmaster
